@@ -1,0 +1,17 @@
+{
+  "login.title": "Iniciar sesión",
+  "login.subtitle": "Escanea el código QR con tu EUDI Wallet",
+  "login.deeplink": "Abrir en Wallet",
+  "login.timeout": "Sesión expirada. Por favor, inténtalo de nuevo.",
+  "login.error": "Se ha producido un error durante el inicio de sesión.",
+  "error.title": "Error de autenticación",
+  "error.message": "Se ha producido un error durante la autenticación del cliente.",
+  "error.details": "Detalles del error",
+  "error.code": "Código de error",
+  "error.description": "Descripción",
+  "error.requestUrl": "URL de la solicitud original",
+  "error.clientUrl": "URL del cliente",
+  "error.copy": "Copiar detalles",
+  "error.copied": "¡Copiado!",
+  "error.back": "Volver"
+}

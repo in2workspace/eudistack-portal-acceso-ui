@@ -1,0 +1,47 @@
+<div class="login-container">
+  <div class="login-card">
+    <div class="login-header" *ngIf="theme?.branding?.logoUrl">
+      <img [src]="theme!.branding.logoUrl" alt="Logo" class="logo" />
+    </div>
+
+    <h1>{{ 'login.title' | translate }}</h1>
+    <p class="subtitle">{{ 'login.subtitle' | translate }}</p>
+
+    <div class="qr-wrapper" *ngIf="authRequest && !timedOut && !errorMessage">
+      <qrcode
+        [qrdata]="authRequest"
+        [width]="280"
+        [errorCorrectionLevel]="'M'"
+        [margin]="2">
+      </qrcode>
+    </div>
+
+    <div class="timeout-message" *ngIf="timedOut">
+      <p>{{ 'login.timeout' | translate }}</p>
+    </div>
+
+    <div class="error-message" *ngIf="errorMessage">
+      <p>{{ errorMessage | translate }}</p>
+    </div>
+
+    <a *ngIf="deeplinkUrl && !timedOut && !errorMessage"
+       [href]="deeplinkUrl"
+       class="deeplink-button">
+      {{ 'login.deeplink' | translate }}
+    </a>
+
+    <div class="links" *ngIf="theme?.content?.links?.length">
+      <a *ngFor="let link of theme!.content.links"
+         [href]="link.url"
+         target="_blank"
+         rel="noopener noreferrer"
+         class="theme-link">
+        {{ link.label }}
+      </a>
+    </div>
+
+    <footer *ngIf="theme?.content?.footer" class="footer">
+      <p>{{ theme!.content.footer }}</p>
+    </footer>
+  </div>
+</div>
