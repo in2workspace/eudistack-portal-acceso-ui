@@ -25,6 +25,7 @@ export class LoginComponent implements OnInit, OnDestroy {
   timedOut = false;
   errorMessage = '';
   sameDevice = false;
+  copied = false;
 
   private sseSub?: Subscription;
   private timerSub?: Subscription;
@@ -63,9 +64,23 @@ export class LoginComponent implements OnInit, OnDestroy {
     }
   }
 
-  get deeplinkUrl(): string {
-    if (!this.authRequest) return '';
-    return this.authRequest.replace(/^https?:\/\//, 'openid4vp://');
+  get walletRedirectUrl(): string {
+    const walletUrl = this.theme?.content?.walletUrl;
+    if (!this.authRequest || !walletUrl) return '';
+    const base = walletUrl.replace(/\/+$/, '');
+    return `${base}/protocol/callback?authorization_request=${encodeURIComponent(this.authRequest)}`;
+  }
+
+  copyAuthRequest(): void {
+    if (!this.authRequest) return;
+    navigator.clipboard.writeText(this.authRequest).then(() => {
+      this.copied = true;
+      setTimeout(() => this.copied = false, 2000);
+    });
+  }
+
+  toggleSameDevice(): void {
+    this.sameDevice = !this.sameDevice;
   }
 
   navigateHome(): void {
@@ -81,8 +96,10 @@ export class LoginComponent implements OnInit, OnDestroy {
   }
 
   openWallet(): void {
-    if (this.deeplinkUrl) {
-      window.location.href = this.deeplinkUrl;
+    if (!this.walletRedirectUrl) return;
+    const opened = window.open(this.walletRedirectUrl, '_blank');
+    if (!opened) {
+      window.location.href = this.walletRedirectUrl;
     }
   }
 
